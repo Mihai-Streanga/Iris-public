@@ -1,0 +1,56 @@
+# Mediul propriu: `.venv` din folderul proiectului, refăcut cu
+#
+#     py -3.14 -m venv .venv
+#     .venv\Scripts\python.exe -m pip install -r requirements.txt
+#
+# Doar dependențele importate direct. Restul (ctranslate2, onnxruntime,
+# tokenizers, av) vin cu faster-whisper și nu se pin-uiesc aici, ca să nu ajungă
+# fișierul o listă care minte la prima actualizare. `av` e singura excepție, și
+# de-aia are un rând al ei mai jos, cu motivul.
+#
+# MODELUL nu e aici. Stă în cache-ul standard HuggingFace, ~\.cache\huggingface\hub\,
+# ~1,5 GB, în afara acestui folder — deci pe o mașină nouă se redescarcă, cu
+# internet. Aliasul `large-v3-turbo` se rezolvă la
+# `mobiuslabsgmbh/faster-whisper-large-v3-turbo`, NU Systran: o comandă de
+# verificare scrisă pe tiparul `models--Systran--*` ratează exact modelul folosit
+# și raportează că lipsește când e acolo.
+faster-whisper==1.2.1
+sounddevice==0.5.6
+numpy==2.5.3
+
+# Motorul de iGPU, pentru ruta pe lungime: audio sub 30 s se transcrie pe Arc
+# 140T, în 0,3–1,2 s în loc de ~5. Aduce `openvino`, `openvino-tokenizers` și
+# `openvino-telemetry`, și **nu actualizează nimic** din ce e deja aici — verificat
+# cu `pip install --dry-run` înainte de a fi pus în mediul care merge.
+#
+# Iris pornește și fără el: `granita_igpu` cere ruta, importul cade, motivul se
+# arată în fereastră și se dictează pe CPU. Deci un mediu vechi nu se strică —
+# doar nu accelerează. `granita_igpu: 0` stinge ruta din configurare.
+openvino-genai==2026.4.1.0
+
+# Excepția, și singura. `av` e dependență indirectă — vine cu faster-whisper —,
+# deci după regula de mai sus n-ar avea rând aici. Îl are fiindcă **fără el
+# comanda de refacere din capul fișierului nu produce un mediu care pornește**:
+#
+#   pip install faster-whisper  →  av 18.1.0  →  la primul import:
+#   ImportError: DLL load failed while importing frame:
+#   An Application Control policy has blocked this file.
+#
+# Măsurat pe 17 august 2026, la construirea unui mediu nou: 18.1.0 e blocat de
+# Windows App Control, 18.0.0 se încarcă. `.venv` care merge are 18.0.0, luată
+# înainte ca 18.1.0 să existe — adică unealta nu s-a stricat niciodată, dar
+# refacerea ei s-ar fi stricat pe orice mașină, la prima încercare.
+#
+# Un fișier care nu pin-uiește ca să nu mintă, dar din care nu se poate reface
+# mediul, minte mai rău: spune că e de ajuns, și nu e.
+#
+# **Pinul se scoate când 18.1.0 (sau mai nou) trece de politică.** Verificare, în
+# afara mediului care merge, ca să nu-l strice:
+#
+#   py -m venv %TEMP%\proba-av
+#   %TEMP%\proba-av\Scripts\python.exe -m pip install av
+#   %TEMP%\proba-av\Scripts\python.exe -c "import av; print(av.__version__)"
+#
+# Dacă tipărește versiunea, blocajul a trecut și rândul de mai jos poate cădea.
+# Re-probat pe 2 octombrie 2026, Python 3.14.8: 19.0.0 e blocat la fel.
+av==18.0.0

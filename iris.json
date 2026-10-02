@@ -1,0 +1,50 @@
+{
+  "model": "large-v3-turbo",
+  "device": "cpu",
+  "compute_type": "int8",
+  "cpu_threads": 8,
+  "limba": "ro",
+  "beam_size": 5,
+
+  "prompt_initial": "Dictare în română, într-o casetă de text. Cuvinte care apar des: Claude, Claude Code, Opus, Sonnet, Iris, endpoint, commit, branch, prompt, token, Docker, Python, PowerShell, JSON, API, browser, Chrome, VS Code, GitHub.",
+
+  "granita_igpu": 30.0,
+  "hotwords": "Claude Code, Claude, Opus, Sonnet, Iris, endpoint, commit, branch, token, Docker, Python, PowerShell, JSON, API, VS Code, GitHub, MCP, Whisper, Chrome, browser, prompt",
+
+  "dispozitiv_intrare": null,
+  "esantionare": 16000,
+  "plafon_secunde": 600,
+
+  "spatiu_final": true,
+  "per_lot": 32,
+  "pauza_lot": 0.002,
+
+  "tasta_comuta": "ctrl+alt+space",
+  "tasta_anuleaza": "ctrl+alt+x",
+
+  "intensitate": 1.0,
+  "voal": 0,
+  "contur_text": 0.55,
+
+  "sunete": true,
+  "volum_sunete": 0.125,
+  "volum_pe_sunet": { "gata": 0.05 },
+  "sunete_fisiere": {
+    "ascult": "sunete/consola.wav",
+    "stop": "sunete/consola.wav",
+    "gata": "sunete/consola-lung.wav",
+    "eroare": "sunete/refuz.wav"
+  },
+
+  "balbe": ["ă{2,}", "â{2,}", "î{2,}", "a{2,}", "e{2,}", "o{2,}", "m{2,}", "hm+", "mhm", "îhî", "eh+", "uh+"],
+
+  "halucinatii": [
+    "(?:să )?(?:vă |v-)?mul(?:ț|t)umim pentru vizionare",
+    "(?:să )?(?:vă |v-)?mul(?:ț|t)umesc pentru vizionare",
+    "mul(?:ț|t)umesc pentru (?:urmărire|atenție)",
+    "abona(?:ț|t)i-vă la canal",
+    "subtitrarea (?:a fost )?realizată de.*",
+    "subtitrare(?:a)? (?:și corectura )?de.*"
+  ]
+}
+

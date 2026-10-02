@@ -1,0 +1,45 @@
+# Mediile Python: se refac din requirements.txt
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.pytest_cache/
+build/
+dist/
+*.egg-info/
+
+# Ce acumulează folosirea, nu ce scrie omul: poziția ferestrei și semnalul
+# „arată-te" lăsat de a doua pornire pentru prima
+stare.json
+arata.semnal
+
+# Secrete și chei — Iris nu folosește niciuna, plasa rămâne
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+token*.json
+client_secret*.json
+
+# Jurnale, baze locale, temporare
+logs/
+*.log
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+tmp-*
+*.tmp
+
+# Ale mașinii
+node_modules/
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
