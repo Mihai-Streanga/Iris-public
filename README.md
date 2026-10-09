@@ -9,6 +9,23 @@ computer, there is no account and no per-use cost. It types the text and stops: 
 Related project: [JA.S.Mine](https://github.com/Mihai-Streanga/Jasmine-public), a personal
 assistant whose voice dictation reuses the engine measurements made in Iris.
 
+## What makes it reliable
+
+- **Accuracy beats speed.** In the private repository, every change to the engine is measured
+  against a versioned corpus of the author's recorded dictations, with an automatic verdict; a
+  tuning that loses a single word on the corpus is rejected, however much faster it is. The one
+  exception, the faster iGPU route for short dictations, is a written decision, flagged in every
+  measurement round.
+- **Nothing leaves the machine.** There is no network layer at all: no HTTP client, no socket,
+  no open port. Audio stays in memory and is never written to disk.
+- **You stay in control of the text.** Iris never presses `Enter`, and when the target window
+  refuses the text it falls back to the clipboard and says so, rather than typing it somewhere
+  else.
+- **Speed-ups never change the text.** Work started in the background while you are still
+  talking is reused only if it is bit-for-bit what the final pass would compute.
+- **31 tests**, with no microphone, window or network; the two that need the real model are
+  skipped with their reason when it is absent, never failed.
+
 Code comments are in Romanian.
 
 ## Screenshots
@@ -239,10 +256,21 @@ downloading ~1.5 GB is run the model.
 - **`av` is pinned to 18.0.0** because 18.1.0 and 19.0.0 were blocked by Windows App Control
   (Smart App Control) on the reference machine; the reason and a re-check command are in
   `requirements.txt`.
-- **No measurement corpus.** The accuracy and speed figures come from the author's voice
-  recordings, which are not published; there is no benchmark script in this repository.
+- **The measurement corpus is private.** The accuracy and speed figures come from the author's
+  own voice recordings, which stay in the private repository together with the benchmark
+  scripts.
 - Pinning to the taskbar works reliably only through a Start Menu shortcut that carries the same
   AppUserModelID (`Mihai.Iris`) as the program.
+
+## How it was built
+
+Iris was built with Claude Code, by a domain expert working as architect and judge of every
+result, on the [Streanga Method](https://github.com/Mihai-Streanga/streanga-method-for-claude).
+Three of the twenty verification patterns in the method's catalogue were first proven here: a
+versioned corpus with an automatic verdict, a recorded corpus run through the product's own
+chain, and measurement kept as a set of commands. Iris is also where the method showed that a
+rule enforced by a tool holds where a written one does not: its commit convention was missed in
+20 commits out of 20 while it was only written down, and in 0 out of 39 once a tool enforced it.
 
 ## License
 
