@@ -1,5 +1,7 @@
 # Iris
 
+[![tests](https://github.com/Mihai-Streanga/Iris-public/actions/workflows/tests.yml/badge.svg)](https://github.com/Mihai-Streanga/Iris-public/actions/workflows/tests.yml)
+
 Iris is a local voice dictation tool for Windows: you speak, and the text is typed into whatever
 text box has the cursor — a chat, a terminal, an editor, Notepad. Speech recognition runs
 entirely on your own machine with Whisper (`large-v3-turbo`), so nothing you say leaves the
@@ -272,6 +274,10 @@ chain, and measurement kept as a set of commands. Iris is also where the method 
 rule enforced by a tool holds where a written one does not: its commit convention was missed in
 20 commits out of 20 while it was only written down, and in 0 out of 39 once a tool enforced it.
 The design decisions, each with its reason and measurement, are in [docs/DESIGN.md](docs/DESIGN.md).
+
+The history here is short because this repository is a copy derived from the private working
+repository, which keeps the full history and the personal data left out of the copy: 94 commits,
+from August to October 2026 (read on 10 October 2026).
 
 ## License
 

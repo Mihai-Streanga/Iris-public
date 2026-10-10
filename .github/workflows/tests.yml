@@ -1,0 +1,22 @@
+name: tests
+
+# Windows, like the project. No microphone or window is used; the 2 integration tests are
+# skipped, with the reason, because the Whisper model is not downloaded here.
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: windows-latest
+    env:
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pytest
