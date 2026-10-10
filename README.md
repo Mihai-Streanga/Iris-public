@@ -271,6 +271,7 @@ versioned corpus with an automatic verdict, a recorded corpus run through the pr
 chain, and measurement kept as a set of commands. Iris is also where the method showed that a
 rule enforced by a tool holds where a written one does not: its commit convention was missed in
 20 commits out of 20 while it was only written down, and in 0 out of 39 once a tool enforced it.
+The design decisions, each with its reason and measurement, are in [docs/DESIGN.md](docs/DESIGN.md).
 
 ## License
 
